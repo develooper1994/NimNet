@@ -14,39 +14,39 @@ type
     
 proc vector*(s: seq[float]): Vector =
     new result
-    result.data = s
+    shallowCopy(result.data, s)
     result.len = s.len
 
 proc vector*(data: varargs[float]): Vector =
     new result
-    result.data = @data
+    shallowCopy(result.data,@data)
     result.len = data.len
 
 proc randomVector*(len: int, max: float = 1.0): Vector =
     new result
-    result.data = newSeqWith(len, rand(max))
+    shallowCopy(result.data, newSeqWith(len, rand(max)))
     result.len = len
 
 proc matrix*(s: seq[seq[float]]): Matrix =
     new result
-    result.data = s
+    shallowCopy(result.data, s)
     result.rows = s.len
     result.cols = s[0].len
 
 proc randomMatrix*(rows, cols: int, max: float = 1.0): Matrix =
     new result
-    result.data = newSeqWith(rows, newSeqWith(cols, rand(max)))
+    shallowCopy(result.data, newSeqWith(rows, newSeqWith(cols, rand(max))))
     result.rows = rows
     result.cols = cols
 
 proc zeros*(len: int): Vector =
     new result
-    result.data = newSeqWith(len, 0.0)
+    shallowCopy(result.data, newSeqWith(len, 0.0))
     result.len = len
 
 proc zeros*(rows, cols: int): Matrix =
     new result
-    result.data = newSeqWith(rows, newSeqWith(cols, 0.0))
+    shallowCopy(result.data, newSeqWith(rows, newSeqWith(cols, 0.0)))
     result.rows = rows
     result.cols = cols
 
@@ -109,27 +109,23 @@ proc `*`*(m: Matrix, v: Vector): Vector =
     result = vector(vec)
 
 proc `*`*(m1, m2: Matrix): Matrix =
-    echo "---- new M * M call ----"
 
-    var X = m2.data
+    echo "------"
+    var test = m2
     var
         s: seq[seq[float]]
         tmp: seq[float]
 
     for r in 0 ..< m1.rows:
-        echo "var X data (per row loop)"
-        echo X
+        echo test.data #calls the entire Matrix each loop, this is where m2 in the second call "disappears"
 
-        for c in 0 ..< m2.cols:
-            tmp.add m1[r] * m2.column(c)
+        for c in 0 ..< test.cols:
+            tmp.add m1[r] * test.column(c)
 
         s.add tmp
         tmp.delete(0,tmp.high)
-
-    echo "------------------------"
+    echo "-------\n"
     return matrix(s)
-
-
 
 
 proc `+`*(v1, v2: Vector): Vector =
@@ -148,13 +144,13 @@ proc `+`*(m: Matrix, v: Vector): Matrix =
 
 
 # misc (organize later)
-proc t*(m: Matrix) = # transpose Matrix
+proc transpose*(m: Matrix) {.inline.} = # transpose Matrix
     var s: seq[seq[float]]
     for i in 0 ..< m.cols:
         s.add m.column(i).data
     m.data = s
-    m.rows = m.data.len
-    m.cols = m.data[0].len
+    m.rows = s.len
+    m.cols = s[0].len
 
 
 # helper procs
