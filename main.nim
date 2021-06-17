@@ -21,25 +21,14 @@ var
     biases2 = vector([-1.0, 2.0, -0.5])
 
 
-
-
-weights.transpose
+weights.t #must transpose Matrices outside of proc call
 var outputsLayer1: Matrix = inputs * weights + biases
 
-var inputsTest = matrix(@[
-        @[4.8,  1.21,  2.385],
-        @[8.9,  -1.81,  0.2],
-        @[1.41,  1.051,  0.02599999999999991]])
+weights2.t
+var outputsLayer2: Matrix = outputsLayer1 * weights2 + biases2
+echo outputsLayer2 #WORKS!
 
-
-weights2.transpose
-var test = outputsLayer1 * weights2 + biases2
-echo test
-
-#var outputsLayer2: Matrix = outputsLayer1 * weights2 + biases2
-
-# THE OUTPUT BELOW IS CORRECT
-#  outputsLayer2:
+# outputsLayer2 should print:
 # [ [ 0.5030999999999999  -1.04185        -2.03875 ]
 #   [ 0.2434000000000003  -2.7332 -5.763300000000001 ]
 #   [ -0.99314    1.41254 -0.3565500000000003 ] ]
