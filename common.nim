@@ -3,10 +3,11 @@
 # - review procs for more potential func/{.nosideeffects.} uses
 # - inline procedures after profiling bottlenecks
 # - add dimension checks & other exception handling
+# - use zip where/when applicable in procs & improve readability/performance
+# - use algorithm and stats modules where/when applicable to improve readability/performance
 # -
-#
 
-import random, sequtils, math, strutils
+import random, sequtils, math, strutils, algorithm, stats
 
 randomize() # inits default random number generator
 
@@ -46,21 +47,21 @@ proc t*(m: var Matrix) = # transpose Matrix
         s.add(m.column(i))
     m = s
 
-func `*`*(v1, v2: Vector): float =
+func `*`*(v1, v2: Vector): float = # v * v dot product
     var s: seq[float]
     for i,val in v1:
         s.add(val * v2[i])
     return s.foldl(a + b)
 
-func `*`*(m: Matrix, v: Vector): Vector =
+func `*`*(m: Matrix, v: Vector): Vector = # m * v dot product
     for vec in m:
         result.add(vec * v)
 
-proc `*`*(m1, m2: Matrix): Matrix =
+proc `*`*(m1, m2: Matrix): Matrix = # m * m dot product
     var tmp: seq[float]
     for r in 0 .. m1.high:
         for c in 0 .. m2[0].high:
-            tmp.add(m1[r] * m2.column(c)) # ? ISSUE ?
+            tmp.add(m1[r] * m2.column(c))
         result.add(tmp)
         tmp.delete(0,tmp.high)
 
@@ -74,6 +75,13 @@ func `+`*(m: Matrix, v: Vector): Matrix =
         s.add(m[r] + v)
     for vec in s:
         result.add(vec)
+
+proc `/`*(v1: Vector, val: float): Vector =
+    result = v1.mapIt(it / val)
+
+proc exp*(v1: Vector): Vector = # exponentiation
+    result = v1
+    result.applyIt(exp(it))
 
 
 # helper procs
