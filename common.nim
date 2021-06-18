@@ -102,7 +102,7 @@ proc `sum`*(m: Matrix, axis: int = 1): Vector  = # UPDATE - handle other axis
 proc echo*(data: Vector) =
     var output = $data
     output = output.multiReplace((","," "),("@",""))
-    echo output
+    echo output & '\n'
 
 proc echo*(data: Matrix) =
     var output: string
