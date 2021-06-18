@@ -47,21 +47,21 @@ proc t*(m: var Matrix) = # transpose Matrix
         s.add(m.column(i))
     m = s
 
-func `*`*(v1, v2: Vector): float = # v * v dot product
+func `dot`*(v1, v2: Vector): float = # v * v dot product
     var s: seq[float]
     for i,val in v1:
         s.add(val * v2[i])
     return s.foldl(a + b)
 
-func `*`*(m: Matrix, v: Vector): Vector = # m * v dot product
+func `dot`*(m: Matrix, v: Vector): Vector = # m * v dot product
     for vec in m:
-        result.add(vec * v)
+        result.add(dot(vec, v))
 
-proc `*`*(m1, m2: Matrix): Matrix = # m * m dot product
+proc `dot`*(m1, m2: Matrix): Matrix = # m * m dot product
     var tmp: seq[float]
     for r in 0 .. m1.high:
         for c in 0 .. m2[0].high:
-            tmp.add(m1[r] * m2.column(c))
+            tmp.add(dot(m1[r], m2.column(c)))
         result.add(tmp)
         tmp.delete(0,tmp.high)
 
@@ -82,6 +82,20 @@ proc `/`*(v1: Vector, val: float): Vector =
 proc exp*(v1: Vector): Vector = # exponentiation
     result = v1
     result.applyIt(exp(it))
+
+proc `*`*(m1, m2: Matrix): Matrix = # Element-wise multiplication of M * M
+    var vec: seq[float]
+    for r in 0 .. m1.high:
+        for c in 0 .. m2[0].high:
+            vec.add(m1[r][c] * m2[r][c])
+        result.add(vec)
+        vec.delete(0,vec.high)
+
+proc `sum`*(m: Matrix, axis: int = 1): Vector  = # UPDATE - handle other axis
+    if axis != 1:
+        raise ValueError.newException("for now, axis must be (1) for this proc")
+    for s in m:
+        result.add(s.foldl(a+b))
 
 
 # helper procs
