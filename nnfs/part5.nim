@@ -2,7 +2,7 @@
 # video ref: https://youtu.be/gmjzbpSVY1A
 
 
-import ../common, datasets/dataset1
+import ../src/common, datasets/dataset1
 from random import rand
 
 

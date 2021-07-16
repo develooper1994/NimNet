@@ -6,7 +6,7 @@
 # sum of normalizedValues should be 0.9999999999999999 for each output Vector within the Matrix
 
 
-import math, ../common, datasets/dataset1
+import math, ../src/common, datasets/dataset1
 from random import rand
 
 

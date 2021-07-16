@@ -1,4 +1,4 @@
-import nimnet, nnfs/datasets/dataset1
+import src/nimnet, nnfs/datasets/dataset1
 
 var
     dense1 = layerDense(2,3)

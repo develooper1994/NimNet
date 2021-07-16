@@ -1,4 +1,4 @@
-from ../../common import matrix,vector
+from ../../src/common import matrix,vector
 
 # this is just a quick temporary data set until a function is created to mimic Sentdex's function
 

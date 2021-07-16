@@ -1,7 +1,7 @@
 # modeling an "output layer neuron" w/ 4 inputs
 # video ref: https://youtu.be/lGLto9Xd7bU
 
-import ../common
+import ../src/common
 
 var
     inputs = vector(@[1.0, 2.0, 3.0, 2.5])
@@ -14,9 +14,9 @@ var
     bias2 = 3.0
     bias3 = 0.5
 
-var outputNeuron = @[inputs * weights1 + bias1,
-                inputs * weights2 + bias2,
-                inputs * weights3 + bias3]
+var outputNeuron = @[inputs.dot(weights1) + bias1,
+                inputs.dot(weights2) + bias2,
+                inputs.dot(weights3) + bias3]
 
 echo outputNeuron
 # [4.8, 1.21, 2.385] #sentdex

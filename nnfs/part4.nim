@@ -1,7 +1,7 @@
 # understanding batches, layers, objects
 # video ref: https://youtu.be/TEWy9vZcxW4
 
-import ../common
+import ../src/common
 
 type
     LayerDense = ref object

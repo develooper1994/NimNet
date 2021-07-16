@@ -1,7 +1,7 @@
 # a single neuron w/ 3 inputs
 # video ref: https://youtu.be/Wo5dMEP_BbI
 
-import ../common
+import ../src/common
 
 var
     inputs = vector(@[1.2, 5.1, 2.1])
@@ -9,7 +9,7 @@ var
 
     bias = 3.0
 
-var output = inputs * weights + bias
+var output = inputs.dot(weights) + bias
 
 echo output
 # 35.7 #sentdex

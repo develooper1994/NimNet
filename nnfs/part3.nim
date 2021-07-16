@@ -1,7 +1,7 @@
 # understanding the "dot product"
 # video ref: https://youtu.be/tMrbN67U9d4
 
-import ../common
+import ../src/common
 
 var
     inputs = vector([1.0, 2.0, 3.0, 2.5])
@@ -12,7 +12,7 @@ var
 
     biases = vector([2.0, 3.0, 0.5])
 
-var outputLayer = weights * inputs + biases
+var outputLayer = weights.dot(inputs) + biases
 
 echo outputLayer
 # [ 4.8   1.21    2.385 ] #sentdex

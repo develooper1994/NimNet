@@ -1,7 +1,7 @@
 # calculating loss from the softmax outputs!
 # video ref: https://youtu.be/levekYbxauw
 
-import ../common, datasets/dataset1, math, sequtils
+import ../src/common, datasets/dataset1, math, sequtils
 from stats import mean
 from random import rand
 
